@@ -25,7 +25,7 @@ public class Game {
             pattern.add(nextButton); // Adds this button to the pattern
             // Displays pattern to user
             for (Button button : pattern) {
-                window.delay(1000);
+                window.delay(1000); // Causes the Thread to sleep for 1 second
                 if (button == button1) { // If the button is button1
                     button1.setBackground(red); // Sets the colour background of the button in question to red
                 } else if (button == button2) { // Else if the button is button2
@@ -35,25 +35,27 @@ public class Game {
                 } else { // Else the button is button4
                     button4.setBackground(green); // Sets the colour background of the button in question to green
                 }
-                window.delay(1000);
-                button.setBackground(null);
+                window.delay(1000); // Causes the Thread to sleep for 1 second
+                button.setBackground(null); // Resets the colour of the button to the original colour
             }
-            window.delay(1500);
-            button1.addMouseListener(clicker);
-            button2.addMouseListener(clicker);
-            button3.addMouseListener(clicker);
-            button4.addMouseListener(clicker);
+            window.delay(1500); // Causes the Thread to sleep for 1.5 seconds
+            // Adds the possibility of user inputs being read by the game
+            for (Button button : buttons){
+                button.addMouseListener(clicker);
+            }
+            // Loops while the series of inputs by the user doesn't equal the size of the pattern
             while (clicker.getUserInputs().size() < pattern.size()) {
                 System.out.println("Please press a button");
             }
-            button1.removeMouseListener(clicker);
-            button2.removeMouseListener(clicker);
-            button3.removeMouseListener(clicker);
-            button4.removeMouseListener(clicker);
+            // Removes the possibility of user inputs being read by the game
+            for (Button button : buttons){
+                button.removeMouseListener(clicker);
+            }
+            // Checks if the pattern matches the series of inputs done by the user
             if (clicker.getUserInputs().equals(pattern)) {
-                textLevel.nextLevel();
-                clicker.getUserInputs().clear();
-            } else {
+                textLevel.nextLevel(); // Moves onto the next level
+                clicker.getUserInputs().clear(); // Clears the inputs just done by the user
+            } else { // Else the user made a mistake and the game loop is to be terminated
                 break;
             }
         }
@@ -68,8 +70,8 @@ public class Game {
                 System.out.flush();
             }
         }
-        catch (Exception e) {e.printStackTrace();}
-        System.out.println("Sorry, you lost at Level " + textLevel.getLevel()); // Prints out to the console how far the user got
+        catch (Exception e) {e.printStackTrace();} // Catches the general Exception
+        System.out.println("Nice job, you got to Level " + textLevel.getLevel() + "!"); // Prints out to the console how far the user got
         System.exit(0); // Closes the GUI
     }
 }
